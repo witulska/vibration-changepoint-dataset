@@ -10,11 +10,11 @@ lin_acc_x,measurement 04 only,float64,m/s^2,empty field (none present),unconstra
 lin_acc_y,measurement 04 only,float64,m/s^2,empty field (none present),unconstrained beyond device limits,linear_accelerometer,ay,Linear acceleration with gravity removed on the device Y axis.
 lin_acc_z,measurement 04 only,float64,m/s^2,empty field (none present),unconstrained beyond device limits,linear_accelerometer,az,Linear acceleration with gravity removed on the device Z axis.
 TgF,archived raw files 01 06 08 only — dropped from processed files,float64,g,n/a,non-negative magnitude,derived,TgF,Total g-force magnitude from Physics Toolbox. Removed from processed files.
-measurement_id,catalogs and JSON metadata,integer,1,n/a,1-9,—,n/a,Recording identifier matching Table 2 of Witulska and Wylomanska (2022).
-subject,measurements_catalog.csv,string,1,n/a,person|motorbike|car,—,n/a,Who or what generated the vibration.
-collection_date,measurements_catalog.csv,date,1,n/a,ISO 8601 YYYY-MM-DD,—,n/a,Calendar date of the experiment from original folder names.
-variance_change_factor,measurements_catalog.csv,string,1,n/a,dynamic_of_motion_change|surface_change,—,n/a,Experimental factor expected to change the variance.
-n_regimes_reported,measurements_catalog.csv,integer,1,n/a,positive integer,—,n/a,Number of regimes printed in the paper table.
+measurement_id,catalogs and JSON metadata,integer,,n/a,1-9,—,n/a,Recording identifier matching Table 2 of Witulska and Wylomanska (2022).
+subject,measurements_catalog.csv,string,,n/a,person|motorbike|car,—,n/a,Who or what generated the vibration.
+collection_date,measurements_catalog.csv,date,,n/a,ISO 8601 YYYY-MM-DD,—,n/a,Calendar date of the experiment from original folder names.
+variance_change_factor,measurements_catalog.csv,string,,n/a,dynamic_of_motion_change|surface_change,—,n/a,Experimental factor expected to change the variance.
+n_regimes_reported,measurements_catalog.csv,integer,,n/a,positive integer,—,n/a,Number of regimes printed in the paper table.
 interval_start_s,change_points.csv,float64,s,n/a,>=0,—,n/a,Left endpoint of the observer-declared break interval.
 interval_end_s,change_points.csv,float64,s,n/a,> interval_start_s,—,n/a,Right endpoint of the observer-declared break interval.
 theoretical_change_point_s,change_points.csv,float64,s,n/a,(start+end)/2,—,n/a,Midpoint of the observer interval used as the theoretical change point in the paper.
