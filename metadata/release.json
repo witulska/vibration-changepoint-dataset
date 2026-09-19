@@ -1,0 +1,16 @@
+{
+  "title": "Smartphone vibration measurements with observer-declared variance change points",
+  "version": "1.0.0",
+  "date_published": "2026-09-19",
+  "generated_at_utc": "2026-09-19T15:22:01Z",
+  "license": "CC-BY-4.0",
+  "n_measurements": 9,
+  "n_processed_rows": 351900,
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "10.14708/ma.v50i1.7155",
+      "scheme": "doi"
+    }
+  ]
+}

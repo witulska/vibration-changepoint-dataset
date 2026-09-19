@@ -1,0 +1,11 @@
+source_column,processed_column,unit,sensor,description
+time,time_s,s,,Time from the start of the recording
+gFx,gforce_x,g,g_force_meter,"G-force, device X axis"
+gFy,gforce_y,g,g_force_meter,"G-force, device Y axis"
+gFz,gforce_z,g,g_force_meter,"G-force, device Z axis"
+wx,ang_vel_x,rad/s,gyroscope,"Angular velocity, device X axis"
+wy,ang_vel_y,rad/s,gyroscope,"Angular velocity, device Y axis"
+wz,ang_vel_z,rad/s,gyroscope,"Angular velocity, device Z axis"
+ax,lin_acc_x,m/s^2,linear_accelerometer,"Linear acceleration (gravity removed), device X axis"
+ay,lin_acc_y,m/s^2,linear_accelerometer,"Linear acceleration (gravity removed), device Y axis"
+az,lin_acc_z,m/s^2,linear_accelerometer,"Linear acceleration (gravity removed), device Z axis"

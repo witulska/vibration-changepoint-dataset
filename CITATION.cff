@@ -1,0 +1,78 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it and the related article below."
+type: dataset
+title: "Smartphone vibration measurements with observer-declared variance change points"
+version: 1.0.0
+date-released: "2026-09-19"
+license: CC-BY-4.0
+abstract: >-
+  Nine smartphone motion-sensor recordings (G-Force Meter, gyroscope, and
+  linear accelerometer) of a person, a motorbike, and a car. Variance changes
+  are induced by gait changes or by a change of road surface (cobblestone
+  versus asphalt). Observer-declared time intervals for structural breaks are
+  included. The recordings are those analysed in Witulska and Wyłomańska
+  (2022), Mathematica Applicanda 50(1), 65–106.
+authors:
+  - family-names: Witulska
+    given-names: Justyna
+    email: justyna.witulska@pwr.edu.pl
+    affiliation: >-
+      Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center,
+      Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27,
+      50-370 Wrocław, Poland
+  - family-names: Wyłomańska
+    given-names: Agnieszka
+    affiliation: >-
+      Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center,
+      Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27,
+      50-370 Wrocław, Poland
+keywords:
+  - change-point detection
+  - variance change
+  - structural break
+  - vibration
+  - smartphone sensors
+  - accelerometer
+  - gyroscope
+  - G-Force Meter
+  - Physics Toolbox Sensor Suite
+  - walking
+  - running
+  - motorbike
+  - car
+  - road surface
+references:
+  - type: article
+    title: "Identification of the structure break point for data with changing variance"
+    authors:
+      - family-names: Witulska
+        given-names: Justyna
+      - family-names: Wyłomańska
+        given-names: Agnieszka
+    year: 2022
+    month: 10
+    journal: "Mathematica Applicanda"
+    volume: 50
+    issue: "1"
+    start: 65
+    end: 106
+    doi: 10.14708/ma.v50i1.7155
+    url: https://doi.org/10.14708/ma.v50i1.7155
+    identifiers:
+      - type: doi
+        value: 10.14708/ma.v50i1.7155
+preferred-citation:
+  type: data
+  title: "Smartphone vibration measurements with observer-declared variance change points"
+  version: 1.0.0
+  year: 2026
+  authors:
+    - family-names: Witulska
+      given-names: Justyna
+    - family-names: Wyłomańska
+      given-names: Agnieszka
+  publisher:
+    name: Zenodo
+  notes: >-
+    Replace the Zenodo DOI below after publishing a versioned GitHub release
+    through the Zenodo–GitHub integration.
