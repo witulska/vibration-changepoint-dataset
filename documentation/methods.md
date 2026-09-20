@@ -28,26 +28,30 @@ Two settings were used to induce a change in variance, following the paper.
 
 ### Person (measurements 01–04), 2021-09-03
 
-A person changed the way of moving. Variance is expected to increase when motion becomes more dynamic (for example walking → running). Seasonality (gait periodicity) is visible.
+A person changed the way of moving. Variance is expected to increase when motion becomes more dynamic (for example walking → running). Seasonality (gait periodicity) is visible. These recordings were collected on a **straight road**.
 
-Protocol recovered from original export comments / sheet names (comments themselves are not in the published files):
+Labeled activity intervals are in `documentation/events.csv`:
 
 - **01** — person; G-Force Meter; one observer-declared break associated with a gait change (walking to running).
-- **02** — rotation, then about 30 s walking, then about 30 s running; G-Force Meter and gyroscope.
-- **03** — walking / running / walking (original Excel sheet name `chodzenie-bieganie-chodzenie`); G-Force Meter and gyroscope. Source file: `pomiar_nr3.xlsx`.
-- **04** — rotation, then about 30 s walking, 30 s running, 30 s walking, 30 s jumping, 30 s walking; G-Force Meter and linear accelerometer.
+- **02** — rotation, then walking, then running; G-Force Meter and gyroscope.
+- **03** — walking / running / walking; G-Force Meter and gyroscope. Imported from Excel.
+- **04** — walking / running / walking / running / walking; G-Force Meter and linear accelerometer.
 
 ### Vehicles (measurements 05–09)
 
 A motorbike or car travelled on a route with **cobblestone (sett)** and **asphalt** segments. Oscillations are typically larger on stone / cobblestone than on asphalt.
 
-Approximate speeds from observer notes (notes removed from files; place names not published):
+Motorbike recordings (05–07): the labeled states *driving along a stone route* and *driving along an asphalt route* include **straight segments**. *Exiting the car park*, *return to the car park*, and the *U-turn maneuver* are **not** straight.
 
-- **05** motorbike — first half of the route ~50 km/h, second half ~80 km/h.
-- **06** motorbike — ~60 km/h throughout.
-- **07** motorbike — ~50 km/h throughout.
-- **08** car — surface change; G-Force Meter only.
-- **09** car — surface change; G-Force Meter and gyroscope.
+Car recordings (08–09): the route was **irregular** (turns, roundabout driving, and similar manoeuvres). Those geometric features were **not logged** during the measurement. **Car speed was not recorded.**
+
+Approximate motorbike speeds. The **first half of the route** is the first asphalt segment plus the first stone segment; the **second half** is the asphalt segment and the stone segment after the U-turn:
+
+- **05** motorbike — first half 50 km/h, second half 80 km/h.
+- **06** motorbike — first half 60 km/h, second half 60 km/h.
+- **07** motorbike — first half 50 km/h, second half 50 km/h.
+- **08** car — surface change; G-Force Meter only; speed not recorded.
+- **09** car — surface change; G-Force Meter and gyroscope; speed not recorded.
 
 Collection dates from original folder names: 2021-09-04 (05–08) and 2021-09-07 (09).
 
@@ -55,9 +59,15 @@ Collection dates from original folder names: 2021-09-04 (05–08) and 2021-09-07
 
 During each recording an observer noted when the character of the vibrations changed. Those times are treated as **theoretical change points**, with a reaction-time error. The paper therefore reports an **interval** that contains the break. The theoretical point used in the article is the **median (midpoint) of the interval**.
 
+The marked / observer-declared breaks concern **scale (variance) changes only**, not changes in the mean level of the signal.
+
 Intervals are stored in `documentation/change_points.csv` and in `measurements_catalog.csv`. They come from Table 2 of the paper, not from an automatic detector.
 
 Note on measurement 08: the paper table lists `regime number = 3` and **three** intervals `[103,104]`, `[197,199]`, `[279,281]`. This release keeps both the reported regime count and all three intervals so users can reproduce the table as printed.
+
+## Labeled activity events
+
+Each recording also has labeled activity intervals (`start`, `stop`, `name`) in elapsed seconds. They describe gait or road-surface states (and, for the motorbike, car-park and U-turn segments). The list is stored in `documentation/events.csv` and in `metadata.events` of each `measurement_XX.json`. Some event boundaries coincide with theoretical change points; the event catalog is not limited to Table 2.
 
 ## Sampling and duplicate timestamps
 
@@ -74,29 +84,20 @@ This release **does not resample**. Duplicate timestamps are a property of the o
 - A missing sensor is represented by **omitted columns**, not by `NA`, `NaN`, `-999`, or `.`.
 - If a future version introduced missing numbers, they would be empty CSV fields / JSON `null`.
 
-## Personal data and redaction
+## Personal data
 
-Removed before publication:
+No names of people, contact details, or GPS coordinates are present. Approximate motorbike speeds are retained in the README and in this documentation. Car speed was not recorded.
 
-- Free-text observer notes in trailing CSV columns (vehicle recordings 05–07), which mentioned incidental local landmarks and approximate speed.
-- Comment header rows with protocol text (recordings 02 and 04); the protocol is summarized above without copying the raw comment string into the data files.
-- Excel workbook metadata that stored a local Windows filesystem path (recording 03).
-
-No names of people, contact details, or GPS coordinates are present. Approximate vehicle speeds are retained only in this documentation.
-
-## Processing pipeline (raw → processed)
+## Processing pipeline
 
 See also the generated `processing_log.md` (file-level checksums and row counts).
 
-1. Read each source file (`pomiar_nr1.csv` … `pomiar_nr9.csv`, and `pomiar_nr3.xlsx`).
+1. Read each original Physics Toolbox export (CSV or Excel). Original filenames are not published.
 2. Detect encoding: UTF-8, UTF-8 BOM, or Windows-1250 (`cp1250`). Excel is read via `openpyxl`.
-3. Drop comment headers and unnamed trailing comment columns.
-4. Coerce remaining columns to numeric values. Fail if any cell is non-numeric.
-5. Write `data/raw/` archives with **original Physics Toolbox names**, semicolon-separated CSV (or a cleaned XLSX sheet), **including `TgF` when it existed**. This is the archived source after redaction, not a bit-identical app dump.
-6. Drop `TgF` if present.
-7. Rename columns to the stable names in `column_mapping.csv`.
-8. Write UTF-8 processed files: comma-separated CSV, TSV, JSON, and a combined XLSX workbook.
-9. No interpolation, filtering, detrending, outlier removal, or unit conversion beyond renaming.
+3. Coerce remaining columns to numeric values. Fail if any cell is non-numeric.
+4. Rename columns to the stable names in `column_mapping.csv`.
+5. Write UTF-8 processed files: comma-separated CSV, JSON, and a combined XLSX workbook.
+6. No interpolation, filtering, detrending, outlier removal, or unit conversion beyond renaming.
 
 Reproduce:
 
@@ -114,7 +115,6 @@ python scripts/process_dataset.py --source /path/to/original_exports
 | linear acceleration | m/s² (Physics Toolbox linear accelerometer) |
 | dates in catalogs | ISO 8601 `YYYY-MM-DD` |
 | CSV | UTF-8, comma, Unix newlines, header row |
-| TSV | UTF-8, tab, Unix newlines |
 | JSON | UTF-8, wrapper object with `records` array |
 
 ## File inventory

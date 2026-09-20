@@ -1,0 +1,42 @@
+measurement_id,event_index,start_s,stop_s,name
+1,1,12.43,67.0,walking
+1,2,67.0,72.84,running
+2,1,13.23,43.5,walking
+2,2,43.5,73.33,running
+3,1,12.05,73.0,walking
+3,2,73.0,133.0,running
+3,3,133.0,195.94,walking
+4,1,19.55,49.0,walking
+4,2,49.0,80.0,running
+4,3,80.0,110.0,walking
+4,4,110.0,140.0,running
+4,5,140.0,174.03,walking
+5,1,0.0,43.83,exiting the car park
+5,2,43.83,86.0,driving along a stone route
+5,3,86.0,156.43,driving along an asphalt route
+5,4,156.43,166.23,U-turn maneuver
+5,5,166.23,215.0,driving along an asphalt route
+5,6,215.0,245.8,driving along a stone route
+5,7,245.8,265.49,return to the car park
+6,1,0.0,11.74,exiting the car park
+6,2,11.74,50.0,driving along a stone route
+6,3,50.0,111.32,driving along an asphalt route
+6,4,111.32,117.91,U-turn maneuver
+6,5,117.91,180.0,driving along an asphalt route
+6,6,180.0,215.8,driving along a stone route
+6,7,215.8,233.67,return to the car park
+7,1,0.0,13.4,exiting the car park
+7,2,13.4,57.0,driving along a stone route
+7,3,57.0,130.78,driving along an asphalt route
+7,4,130.78,138.52,U-turn maneuver
+7,5,138.52,212.0,driving along an asphalt route
+7,6,212.0,252.36,driving along a stone route
+7,7,252.36,274.63,return to the car park
+8,1,92.7,103.5,driving along an asphalt route
+8,2,103.5,138.01,driving along a stone route
+8,3,185.23,198.0,driving along an asphalt route
+8,4,198.0,280.0,driving along a stone route
+8,5,280.0,306.23,driving along an asphalt route
+9,1,9.62,92.0,driving along an asphalt route
+9,2,92.0,150.0,driving along a stone route
+9,3,150.0,170.5,driving along an asphalt route

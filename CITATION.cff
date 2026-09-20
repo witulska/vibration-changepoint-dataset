@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it and the related article below."
 type: dataset
-title: "Smartphone vibration measurements with observer-declared variance change points"
+title: "Vibration measurements with observer-declared variance change points"
 version: 1.0.0
 date-released: "2026-09-19"
 license: CC-BY-4.0
@@ -16,12 +16,6 @@ authors:
   - family-names: Witulska
     given-names: Justyna
     email: justyna.witulska@pwr.edu.pl
-    affiliation: >-
-      Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center,
-      Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27,
-      50-370 Wrocław, Poland
-  - family-names: Wyłomańska
-    given-names: Agnieszka
     affiliation: >-
       Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center,
       Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27,
@@ -63,14 +57,12 @@ references:
         value: 10.14708/ma.v50i1.7155
 preferred-citation:
   type: data
-  title: "Smartphone vibration measurements with observer-declared variance change points"
+  title: "Vibration measurements with observer-declared variance change points"
   version: 1.0.0
   year: 2026
   authors:
     - family-names: Witulska
       given-names: Justyna
-    - family-names: Wyłomańska
-      given-names: Agnieszka
   publisher:
     name: Zenodo
   notes: >-

@@ -1,4 +1,4 @@
-# Smartphone vibration measurements with observer-declared variance change points
+# Vibration measurements with observer-declared variance change points
 
 **Version 1.0.0** · **2026-09-19** · **License: [CC BY 4.0](LICENSE)**
 
@@ -8,14 +8,12 @@ These are the vibration recordings analysed in:
 
 > Witulska, J., & Wyłomańska, A. (2022). Identification of the structure break point for data with changing variance. *Mathematica Applicanda*, 50(1), 65–106. https://doi.org/10.14708/ma.v50i1.7155
 
-Polish summary: dziewięć pomiarów drgań ze smartfona (osoba / motocykl / samochód). W plikach usunięto komentarze i kolumnę `TgF`. Pomiar nr 3 pochodzi z `pomiar_nr3.xlsx`. Słownik kolumn, metoda zbierania i log czyszczenia są w `documentation/`.
-
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Title | Smartphone vibration measurements with observer-declared variance change points |
-| Authors | Justyna Witulska; Agnieszka Wyłomańska |
+| Title | Vibration measurements with observer-declared variance change points |
+| Author | Justyna Witulska |
 | Affiliation | Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center, Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27, 50-370 Wrocław, Poland |
 | Contact | justyna.witulska@pwr.edu.pl |
 | Description | Vibration time series with observer-declared variance-change intervals, from smartphone inertial sensors |
@@ -35,10 +33,11 @@ Machine-readable copies: `CITATION.cff`, `.zenodo.json`, `metadata/metadata.json
 ```
 dataset/
 ├── data/
-│   ├── raw/                 # archived exports (original column names; comments removed)
-│   └── processed/           # CSV, TSV, JSON, XLSX with stable column names
+│   └── processed/           # CSV, JSON, XLSX with stable column names
+├── figures/                 # one PNG per measurement (subplots of all channels)
 ├── scripts/
-│   └── process_dataset.py   # raw → processed (re-runnable)
+│   ├── process_dataset.py   # original exports → processed (re-runnable)
+│   └── plot_measurements.py # time-series figures with observer change points
 ├── documentation/
 │   ├── data_dictionary.csv  # every column: type, unit, allowed values
 │   ├── data_dictionary.md
@@ -46,6 +45,7 @@ dataset/
 │   ├── processing_log.md    # per-file operations and checksums
 │   ├── measurements_catalog.csv
 │   ├── change_points.csv
+│   ├── events.csv
 │   └── column_mapping.csv
 ├── metadata/
 ├── README.md
@@ -69,18 +69,34 @@ dataset/
 
 Total processed samples: **351 900**.
 
-- Person recordings: walking / running / jumping. Variance is typically larger when motion is more dynamic. Gait periodicity is visible.
+- Person recordings: walking / running. Variance is typically larger when motion is more dynamic. Gait periodicity is visible.
 - Vehicle recordings: cobblestone (sett) versus asphalt. Oscillations are typically larger on stone than on asphalt.
-- Measurement **03** was archived from Excel (`pomiar_nr3.xlsx`, sheet `chodzenie-bieganie-chodzenie`).
+- Measurement **03** was imported from Excel (walking / running / walking).
 - Measurement **08**: the paper table reports 3 regimes and lists three intervals; both facts are kept as printed.
 
-Observer intervals account for reaction time. The paper takes the **midpoint of each interval** as the theoretical change point (`documentation/change_points.csv`).
+Observer intervals account for reaction time. The paper takes the **midpoint of each interval** as the theoretical change point (`documentation/change_points.csv`). The marked / observer-declared breaks concern **scale (variance) changes only**, not changes in the mean level of the signal.
 
-There is **no unnecessary personal data**: no names, IDs, GPS, audio, or video. Trailing CSV comments that named incidental landmarks were deleted; approximate speeds are described only in `documentation/methods.md`.
+Labeled activity intervals (`start`, `stop`, `name`, elapsed seconds) are stored in each processed JSON file under `metadata.events` and in `documentation/events.csv`. Some event boundaries coincide with theoretical change points; the event list is a richer description of the route and is not limited to the paper’s Table 2 breaks.
+
+### Route geometry and speed
+
+- Person recordings (01–04) were collected on a **straight road**.
+- Motorbike recordings (05–07): the states *driving along a stone route* and *driving along an asphalt route* include **straight segments**. *Exiting the car park*, *return to the car park*, and the *U-turn maneuver* are **not** straight.
+- Car recordings (08–09): the route was **irregular** (turns, roundabout driving, and similar manoeuvres). Those geometric features were **not logged** during the measurement. **Car speed was not recorded.**
+
+Approximate motorbike speeds. The **first half of the route** is the first asphalt segment plus the first stone segment; the **second half** is the asphalt segment and the stone segment after the U-turn:
+
+| id | first half of the route | second half of the route |
+|---:|---|---|
+| 05 | 50 km/h | 80 km/h |
+| 06 | 60 km/h | 60 km/h |
+| 07 | 50 km/h | 50 km/h |
+
+There is **no unnecessary personal data**: no names, IDs, GPS, audio, or video.
 
 ## Column names and units
 
-Processed files use stable names. Physics Toolbox names remain in `data/raw/` and in `documentation/column_mapping.csv`.
+Processed files use stable names. Original Physics Toolbox names are listed in `documentation/column_mapping.csv`.
 
 | processed | original | unit |
 |---|---|---|
@@ -88,8 +104,6 @@ Processed files use stable names. Physics Toolbox names remain in `data/raw/` an
 | `gforce_x`, `gforce_y`, `gforce_z` | `gFx`, `gFy`, `gFz` | g (standard gravity) |
 | `ang_vel_x`, `ang_vel_y`, `ang_vel_z` | `wx`, `wy`, `wz` | rad/s |
 | `lin_acc_x`, `lin_acc_y`, `lin_acc_z` | `ax`, `ay`, `az` | m/s² (measurement 04 only) |
-
-`TgF` (total g-force) was **dropped** from processed files when present (measurements 01, 06, 08). It is still in the matching archived raw CSVs.
 
 If a sensor was not recorded, its columns are **absent**, not filled with a code. There are **no missing numeric cells** in this release. Empty CSV fields / JSON `null` would be the missing-value code if they appeared later.
 
@@ -104,27 +118,29 @@ import pandas as pd
 
 df = pd.read_csv("data/processed/measurement_03.csv")
 breaks = pd.read_csv("documentation/change_points.csv")
+events = pd.read_csv("documentation/events.csv")
 breaks_03 = breaks.query("measurement_id == 3")
+events_03 = events.query("measurement_id == 3")
 print(df.columns.tolist(), df["time_s"].iloc[[0, -1]].tolist())
 print(breaks_03[["interval_start_s", "interval_end_s", "theoretical_change_point_s"]])
+print(events_03[["start_s", "stop_s", "name"]])
 ```
 
-CSV is the canonical processed format. TSV, JSON, and `data/processed/measurements.xlsx` contain the same samples.
+CSV is the canonical format. JSON and `data/processed/measurements.xlsx` contain the same samples.
 
-To regenerate processed files from the archived sources:
+## Figures
+
+Each recording has a PNG in `figures/` with one subplot per channel (shared time axis). Yellow bands are observer-declared break intervals; dashed red lines are the theoretical change points (interval midpoints).
 
 ```bash
-python -m pip install -r scripts/requirements.txt
-python scripts/process_dataset.py --source data/raw
+python scripts/plot_measurements.py
 ```
-
-SHA-256 checksums: `data/processed/checksums.sha256`.
 
 ## How to cite
 
 **Dataset** (after the Zenodo DOI exists — replace the placeholder):
 
-Witulska, J., & Wyłomańska, A. (2026). *Smartphone vibration measurements with observer-declared variance change points* (Version 1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+Witulska, J., & Wyłomańska, A. (2026). *Vibration measurements with observer-declared variance change points* (Version 1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
 
 **Related article** (always cite with the dataset):
 
@@ -149,8 +165,8 @@ BibTeX for the dataset (fill in the Zenodo DOI after the first release):
 
 ```bibtex
 @misc{witulska2026vibration,
-  title        = {Smartphone vibration measurements with observer-declared variance change points},
-  author       = {Witulska, Justyna and Wy{\l}oma{\'n}ska, Agnieszka},
+  title        = {Vibration measurements with observer-declared variance change points},
+  author       = {Witulska, Justyna},
   year         = {2026},
   note         = {Version 1.0.0 [Data set]},
   publisher    = {Zenodo},
@@ -159,16 +175,3 @@ BibTeX for the dataset (fill in the Zenodo DOI after the first release):
 ```
 
 In the article, cite the dataset like any other scholarly source (dataset → repository → DOI → version → documentation → paper), not as an informal spreadsheet link.
-
-## DOI via Zenodo (versioned)
-
-A GitHub URL is not a DOI. Zenodo issues a **DOI for a specific version** (a GitHub release). Later substantial changes should be a new version; previous versions remain citable.
-
-1. Push this repository to GitHub (public).
-2. Sign in at [https://zenodo.org](https://zenodo.org) with the same GitHub account (or enable GitHub in Zenodo settings).
-3. In Zenodo: *GitHub* → enable this repository.
-4. On GitHub: *Releases* → create tag **`v1.0.0`** (matches `CITATION.cff`).
-5. Zenodo archives that release and shows a DOI such as `10.5281/zenodo.1234567`.
-6. Put that DOI into `CITATION.cff` (`identifiers`) and into the citation block above, then tag **`v1.0.1`** only if you need the metadata files themselves to contain the DOI.
-
-`.zenodo.json` supplies title, authors, license, keywords, and the related-article DOI `10.14708/ma.v50i1.7155`.

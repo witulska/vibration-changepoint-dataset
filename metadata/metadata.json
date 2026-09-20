@@ -1,15 +1,10 @@
 {
-  "title": "Smartphone vibration measurements with observer-declared variance change points",
+  "title": "Vibration measurements with observer-declared variance change points",
   "authors": [
     {
       "family_name": "Witulska",
       "given_name": "Justyna",
       "email": "justyna.witulska@pwr.edu.pl",
-      "affiliation": "Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center, Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27, 50-370 Wrocław, Poland"
-    },
-    {
-      "family_name": "Wyłomańska",
-      "given_name": "Agnieszka",
       "affiliation": "Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center, Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27, 50-370 Wrocław, Poland"
     }
   ],
@@ -40,7 +35,7 @@
   "spatial_coverage": "Urban route with cobblestone (sett) and asphalt segments (vehicle recordings); pedestrian gait recordings. Exact landmarks are not published.",
   "n_measurements": 9,
   "n_processed_rows": 351900,
-  "file_formats": ["CSV", "TSV", "JSON", "XLSX"],
+  "file_formats": ["CSV", "JSON", "XLSX"],
   "sources": [
     {
       "type": "related_publication",
@@ -57,6 +52,6 @@
     "status": "to_be_assigned_by_zenodo_on_github_release",
     "note": "Mint a version-specific DOI by connecting this repository to Zenodo and creating GitHub release v1.0.0. Subsequent substantial changes should be a new version (v1.1.0, v2.0.0, …)."
   },
-  "how_to_cite_dataset": "Witulska, J., & Wyłomańska, A. (2026). Smartphone vibration measurements with observer-declared variance change points (Version 1.0.0) [Data set]. Zenodo. DOI (assigned after the Zenodo release).",
+  "how_to_cite_dataset": "Witulska, J. (2026). Vibration measurements with observer-declared variance change points (Version 1.0.0) [Data set]. Zenodo. DOI (assigned after the Zenodo release).",
   "how_to_cite_article": "Witulska, J., & Wyłomańska, A. (2022). Identification of the structure break point for data with changing variance. Mathematica Applicanda, 50(1), 65–106. https://doi.org/10.14708/ma.v50i1.7155"
 }

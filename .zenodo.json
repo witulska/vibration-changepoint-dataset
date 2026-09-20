@@ -1,14 +1,10 @@
 {
-  "title": "Smartphone vibration measurements with observer-declared variance change points",
+  "title": "Vibration measurements with observer-declared variance change points",
   "upload_type": "dataset",
   "description": "<p>Nine smartphone motion-sensor recordings (G-Force Meter, gyroscope, and linear accelerometer) of a person, a motorbike, and a car. Variance changes are induced by gait changes or by a change of road surface (cobblestone versus asphalt). Observer-declared time intervals for structural breaks are included.</p><p>These are the vibration measurements analysed in Witulska and Wyłomańska (2022), <em>Identification of the structure break point for data with changing variance</em>, Mathematica Applicanda 50(1), 65–106, <a href=\"https://doi.org/10.14708/ma.v50i1.7155\">https://doi.org/10.14708/ma.v50i1.7155</a>.</p>",
   "creators": [
     {
       "name": "Witulska, Justyna",
-      "affiliation": "Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center, Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27, 50-370 Wrocław, Poland"
-    },
-    {
-      "name": "Wyłomańska, Agnieszka",
       "affiliation": "Faculty of Pure and Applied Mathematics, Hugo Steinhaus Center, Wrocław University of Science and Technology, Wybrzeże Wyspiańskiego 27, 50-370 Wrocław, Poland"
     }
   ],
@@ -41,5 +37,5 @@
     }
   ],
   "communities": [],
-  "notes": "Time is elapsed seconds from the start of each recording, not a calendar datetime. Duplicate timestamps come from interleaved multi-sensor logging in Physics Toolbox Sensor Suite and are kept as exported. Column TgF (total g-force) was removed from processed files. Observer free-text notes were removed; sanitized protocol is in documentation/methods.md."
+  "notes": "Time is elapsed seconds from the start of each recording, not a calendar datetime. Duplicate timestamps come from interleaved multi-sensor logging in Physics Toolbox Sensor Suite and are kept as exported."
 }

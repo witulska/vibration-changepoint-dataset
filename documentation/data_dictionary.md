@@ -1,6 +1,6 @@
 # Data dictionary
 
-This dictionary describes processed files in `data/processed/measurement_XX.csv` (and the matching TSV/JSON/XLSX sheets). Source Physics Toolbox names are in `column_mapping.csv`.
+This dictionary describes processed files in `data/processed/measurement_XX.csv` (and the matching JSON/XLSX sheets). Source Physics Toolbox names are in `column_mapping.csv`.
 
 Missing numeric values do not occur in this release. If a sensor was not recorded for a measurement, **the corresponding columns are omitted** rather than filled with a sentinel. Empty fields would be the missing-value code if they appeared.
 
@@ -21,14 +21,6 @@ Time is elapsed seconds from the start of each recording. It is **not** a calend
 | lin_acc_y | float64 | m/s² | unconstrained beyond device limits | Linear Accelerometer | Linear acceleration with gravity removed, device Y axis. Original name: `ay`. Present only in measurement 04. |
 | lin_acc_z | float64 | m/s² | unconstrained beyond device limits | Linear Accelerometer | Linear acceleration with gravity removed, device Z axis. Original name: `az`. Present only in measurement 04. |
 
-## Columns removed from processed files
-
-| original_name | reason |
-|---|---|
-| TgF | Total g-force magnitude computed by the app. Dropped when present (measurements 01, 06, 08). Not a primary sensor channel in Table 2 of the source paper. |
-| unnamed / empty trailing columns | Free-text observer notes (route and speed). Removed; sanitized protocol is in `methods.md`. |
-| comment header rows | Protocol notes in measurements 02 and 04. Removed from data files; content summarized in `methods.md`. |
-
 ## Catalog files
 
 ### `measurements_catalog.csv`
@@ -38,7 +30,6 @@ One row per recording.
 | column_name | data_type | description |
 |---|---|---|
 | measurement_id | integer | Identifier 1–9, matching Table 2 in Witulska & Wyłomańska (2022). |
-| source_file | string | Archived source filename in `data/raw/`. |
 | processed_csv | string | Processed CSV filename. |
 | subject | string | `person`, `motorbike`, or `car`. |
 | collection_date | date (YYYY-MM-DD) | Calendar date of the experiment, from original folder names. |
@@ -60,9 +51,21 @@ One row per recording.
 | columns | string | Ordered processed column names. |
 | sha256_csv | string | SHA-256 of the processed CSV. |
 
+### `events.csv`
+
+One row per labeled activity interval. Times are elapsed seconds from the start of the recording. These labels describe what was happening on the route; they are not the same object as the observer-declared variance-change intervals.
+
+| column_name | data_type | unit | description |
+|---|---|---|---|
+| measurement_id | integer | — | Recording identifier. |
+| event_index | integer | — | Order of the event in that recording (1-based). |
+| start_s | float | s | Inclusive start of the labeled interval. |
+| stop_s | float | s | End of the labeled interval. |
+| name | string | — | Activity or road-state label (for example `walking`, `driving along a stone route`). |
+
 ### `change_points.csv`
 
-One row per observer-declared structural break.
+One row per observer-declared structural break. The breaks concern scale (variance) changes only.
 
 | column_name | data_type | unit | description |
 |---|---|---|---|
@@ -80,7 +83,7 @@ Each `measurement_XX.json` object contains:
 | field | type | description |
 |---|---|---|
 | measurement_id | integer | Recording identifier. |
-| metadata | object | Catalog fields plus sampling summary. |
+| metadata | object | Catalog fields plus sampling summary and labeled `events` (`start`, `stop`, `name` in seconds). |
 | column_units | object | Map of column name → unit string. |
 | missing_value_code | string | How missing values would be coded. |
 | n_rows | integer | Number of records. |
