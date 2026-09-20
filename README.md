@@ -28,30 +28,6 @@ These are the vibration recordings analysed in:
 
 Machine-readable copies: `CITATION.cff`, `.zenodo.json`, `metadata/metadata.json`.
 
-## Repository layout
-
-```
-dataset/
-├── data/
-│   └── processed/           # CSV, JSON, XLSX with stable column names
-├── figures/                 # one PNG per measurement (subplots of all channels)
-├── scripts/
-│   ├── process_dataset.py   # original exports → processed (re-runnable)
-│   └── plot_measurements.py # time-series figures with observer change points
-├── documentation/
-│   ├── data_dictionary.csv  # every column: type, unit, allowed values
-│   ├── data_dictionary.md
-│   ├── methods.md           # collection + processing
-│   ├── processing_log.md    # per-file operations and checksums
-│   ├── measurements_catalog.csv
-│   ├── change_points.csv
-│   ├── events.csv
-│   └── column_mapping.csv
-├── metadata/
-├── README.md
-├── LICENSE
-└── CITATION.cff
-```
 
 ## What is in the data
 
