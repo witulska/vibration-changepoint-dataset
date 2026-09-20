@@ -161,7 +161,7 @@ BibTeX for the article:
 }
 ```
 
-BibTeX for the dataset (fill in the Zenodo DOI after the first release):
+BibTeX for the dataset:
 
 ```bibtex
 @misc{witulska2026vibration,
@@ -170,7 +170,7 @@ BibTeX for the dataset (fill in the Zenodo DOI after the first release):
   year         = {2026},
   note         = {Version 1.0.0 [Data set]},
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.XXXXXXX}
+  doi          = {10.5281/zenodo.22864071}
 }
 ```
 
